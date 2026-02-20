@@ -1,0 +1,15 @@
+# Home Assistant runtime data (generato dal dev container)
+config/.storage/
+config/home-assistant.log
+config/home-assistant_v2.db
+config/home-assistant_v2.db-shm
+config/home-assistant_v2.db-wal
+config/.HA_VERSION
+config/tts/
+config/.cloud/
+config/deps/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo

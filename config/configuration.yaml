@@ -1,0 +1,54 @@
+# =============================================================
+# Home Assistant - Dev config per universal_notifier
+# =============================================================
+
+homeassistant:
+  name: "Dev Home"
+  latitude: 45.4654
+  longitude: 9.1866
+  elevation: 122
+  unit_system: metric
+  time_zone: Europe/Rome
+  country: IT
+
+default_config:
+
+# Logging verboso solo per il componente in sviluppo
+logger:
+  default: warning
+  logs:
+    custom_components.universal_notifier: debug
+
+# Entità demo (media_player.living_room, media_player.bedroom, ecc.)
+# Necessarie per testare la logica vocale (snapshot/volume/restore)
+demo:
+
+# =============================================================
+# UNIVERSAL NOTIFIER
+# CONFIG_SCHEMA richiede SOLO `channels` (tutto il resto ha default)
+# =============================================================
+universal_notifier:
+  assistant_name: "Jarvis"       # Name displayed in text messages
+  date_format: "%H:%M"           # Time format
+  include_time: true
+
+  dnd:
+    start: "00:00"
+    end: "06:30"
+    
+  greetings:
+    morning:
+      - "Good morning sir"
+      - "Welcome back"
+    night:
+      - "Good night"
+      - "Shh, it's late"
+
+  channels:
+    notifica_ui:
+      service: notify.persistent_notification
+      is_voice: false
+    google_home:
+      service: tts.speak
+      target: tts.google_translate_en_com
+      is_voice: true

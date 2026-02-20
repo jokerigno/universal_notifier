@@ -1,0 +1,186 @@
+2026-02-20 19:29:23.463 WARNING (SyncWorker_0) [homeassistant.loader] We found a custom integration universal_notifier which has not been tested by Home Assistant. This component might cause stability problems, be sure to disable it if you experience issues with Home Assistant
+2026-02-20 19:29:25.205 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Voice Queue Worker avviato.
+2026-02-20 20:04:52.487 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Channel Configuration {'service': 'tts.speak', 'target': 'tts.google_translate_en_com', 'is_voice': True}
+2026-02-20 20:04:52.488 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Specific Data {'entity_id': 'media_player.kitchen'}
+2026-02-20 20:04:52.488 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Dynamic Entities ['media_player.kitchen']
+2026-02-20 20:04:52.488 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service type None
+2026-02-20 20:04:52.488 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service alt {}
+2026-02-20 20:04:52.488 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Full Service Name tts.speak
+2026-02-20 20:04:52.488 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: final_title 'None' 
+2026-02-20 20:04:52.489 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Media players coinvolti ['media_player.kitchen'].
+2026-02-20 20:04:52.489 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Messaggio per google_home accodato.
+2026-02-20 20:04:52.489 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Snapshot originale salvato per media_player.kitchen: {'state': 'playing', 'volume': 1.0, 'app_name': None, 'media_content_id': 'bounzz-1', 'media_content_type': <MediaType.MUSIC: 'music'>, 'media_position': None, 'entity_id': 'media_player.kitchen'}
+2026-02-20 20:04:52.490 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Elaborazione messaggio vocale: Laundry Alert. Buona serata. The wa...
+2026-02-20 20:04:52.490 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: ['media_player.kitchen'] 0.3 speak {'message': 'Laundry Alert. Buona serata. The washing machine has finished its cycle.', 'entity_id': 'tts.google_translate_en_com', 'media_player_entity_id': ['media_player.kitchen']} 
+2026-02-20 20:04:52.491 ERROR (MainThread) [homeassistant.core] Error executing service: <ServiceCall tts.speak (c:01KHY71JGAVGDE8SV1R89CGDXA): message=Laundry Alert. Buona serata. The washing machine has finished its cycle., entity_id=['tts.google_translate_en_com'], media_player_entity_id=['media_player.kitchen'], cache=True>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2837, in _run_service_call_catch_exceptions
+    await coro_or_task
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 832, in entity_service_call
+    single_response = await _handle_entity_call(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        hass, entity, func, data, call.context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 904, in _handle_entity_call
+    result = await task
+             ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/tts/entity.py", line 136, in async_speak
+    await self.hass.services.async_call(
+    ...<17 lines>...
+    )
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2817, in async_call
+    response_data = await coro
+                    ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 816, in entity_service_call
+    raise ServiceNotSupported(call.domain, call.service, entity.entity_id)
+homeassistant.exceptions.ServiceNotSupported: Entity media_player.kitchen does not support action media_player.play_media
+2026-02-20 20:04:52.503 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Attesa di 5.90s per fine messaggio.
+2026-02-20 20:04:58.404 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Coda vuota, chiusura sessione e ripristino media.
+2026-02-20 20:04:58.404 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Resume del volume di media_player.kitchen con 1.0
+2026-02-20 20:04:58.405 ERROR (MainThread) [homeassistant.core] Error executing service: <ServiceCall media_player.play_media (c:01KHY71R94F23A3EV02490A6PX): entity_id=['media_player.kitchen'], extra=, media_type=music, media_id=bounzz-1>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2837, in _run_service_call_catch_exceptions
+    await coro_or_task
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 816, in entity_service_call
+    raise ServiceNotSupported(call.domain, call.service, entity.entity_id)
+homeassistant.exceptions.ServiceNotSupported: Entity media_player.kitchen does not support action media_player.play_media
+2026-02-20 20:04:58.407 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Tentativo di resume eseguito per media_player.kitchen
+2026-02-20 20:05:18.598 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Channel Configuration {'service': 'tts.speak', 'target': 'tts.google_translate_en_com', 'is_voice': True}
+2026-02-20 20:05:18.598 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Specific Data {'entity_id': 'media_player.kitchen'}
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Dynamic Entities ['media_player.kitchen']
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service type None
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service alt {}
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Full Service Name tts.speak
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: final_title 'None' 
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Media players coinvolti ['media_player.kitchen'].
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Messaggio per google_home accodato.
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Channel Configuration {'service': 'notify.persistent_notification', 'is_voice': False}
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Specific Data {}
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Dynamic Entities []
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service type None
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service alt {}
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Full Service Name notify.persistent_notification
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: final_title '[ - 20:05:18] Laundry Alert' 
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Final payload {'message': 'Buonasera. The washing machine has finished its cycle.', 'title': '[ - 20:05:18] Laundry Alert'} - Service data notify/persistent_notification
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Snapshot originale salvato per media_player.kitchen: {'state': 'playing', 'volume': 1.0, 'app_name': None, 'media_content_id': 'bounzz-1', 'media_content_type': <MediaType.MUSIC: 'music'>, 'media_position': None, 'entity_id': 'media_player.kitchen'}
+2026-02-20 20:05:18.599 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Elaborazione messaggio vocale: Laundry Alert. Buonasera. The washi...
+2026-02-20 20:05:18.600 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: ['media_player.kitchen'] 0.3 speak {'message': 'Laundry Alert. Buonasera. The washing machine has finished its cycle.', 'entity_id': 'tts.google_translate_en_com', 'media_player_entity_id': ['media_player.kitchen']} 
+2026-02-20 20:05:18.600 ERROR (MainThread) [homeassistant.core] Error executing service: <ServiceCall tts.speak (c:01KHY72C085E1G1ZTBFWXXQK4Y): message=Laundry Alert. Buonasera. The washing machine has finished its cycle., entity_id=['tts.google_translate_en_com'], media_player_entity_id=['media_player.kitchen'], cache=True>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2837, in _run_service_call_catch_exceptions
+    await coro_or_task
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 832, in entity_service_call
+    single_response = await _handle_entity_call(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        hass, entity, func, data, call.context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 904, in _handle_entity_call
+    result = await task
+             ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/tts/entity.py", line 136, in async_speak
+    await self.hass.services.async_call(
+    ...<17 lines>...
+    )
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2817, in async_call
+    response_data = await coro
+                    ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 816, in entity_service_call
+    raise ServiceNotSupported(call.domain, call.service, entity.entity_id)
+homeassistant.exceptions.ServiceNotSupported: Entity media_player.kitchen does not support action media_player.play_media
+2026-02-20 20:05:18.603 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Attesa di 5.50s per fine messaggio.
+2026-02-20 20:05:24.104 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Coda vuota, chiusura sessione e ripristino media.
+2026-02-20 20:05:24.105 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Resume del volume di media_player.kitchen con 1.0
+2026-02-20 20:05:24.105 ERROR (MainThread) [homeassistant.core] Error executing service: <ServiceCall media_player.play_media (c:01KHY72HC9TNG0X8YT6K3Z0CJ2): entity_id=['media_player.kitchen'], extra=, media_type=music, media_id=bounzz-1>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2837, in _run_service_call_catch_exceptions
+    await coro_or_task
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 816, in entity_service_call
+    raise ServiceNotSupported(call.domain, call.service, entity.entity_id)
+homeassistant.exceptions.ServiceNotSupported: Entity media_player.kitchen does not support action media_player.play_media
+2026-02-20 20:05:24.107 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Tentativo di resume eseguito per media_player.kitchen
+2026-02-20 20:35:44.205 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Channel Configuration {'service': 'tts.speak', 'target': 'tts.google_translate_en_com', 'is_voice': True}
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Specific Data {'entity_id': 'media_player.kitchen'}
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Dynamic Entities ['media_player.kitchen']
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service type None
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service alt {}
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Full Service Name tts.speak
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: final_title 'None' 
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Media players coinvolti ['media_player.kitchen'].
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Messaggio per google_home accodato.
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Channel Configuration {'service': 'notify.persistent_notification', 'is_voice': False}
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Specific Data {}
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Dynamic Entities []
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service type None
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Service alt {}
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Full Service Name notify.persistent_notification
+2026-02-20 20:35:44.207 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: final_title '[ - 20:35:44] Laundry Alert' 
+2026-02-20 20:35:44.208 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Final payload {'message': 'Buona serata. The washing machine has finished its cycle.', 'title': '[ - 20:35:44] Laundry Alert'} - Service data notify/persistent_notification
+2026-02-20 20:35:44.208 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Snapshot originale salvato per media_player.kitchen: {'state': 'playing', 'volume': 1.0, 'app_name': None, 'media_content_id': 'bounzz-1', 'media_content_type': <MediaType.MUSIC: 'music'>, 'media_position': None, 'entity_id': 'media_player.kitchen'}
+2026-02-20 20:35:44.211 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Elaborazione messaggio vocale: Laundry Alert. Buona serata. The wa...
+2026-02-20 20:35:44.211 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: ['media_player.kitchen'] 0.3 speak {'message': 'Laundry Alert. Buona serata. The washing machine has finished its cycle.', 'entity_id': 'tts.google_translate_en_com', 'media_player_entity_id': ['media_player.kitchen']} 
+2026-02-20 20:35:44.219 ERROR (MainThread) [homeassistant.core] Error executing service: <ServiceCall tts.speak (c:01KHY8T2TKFDCFHWE8NPYNK6Y7): message=Laundry Alert. Buona serata. The washing machine has finished its cycle., entity_id=['tts.google_translate_en_com'], media_player_entity_id=['media_player.kitchen'], cache=True>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2837, in _run_service_call_catch_exceptions
+    await coro_or_task
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 832, in entity_service_call
+    single_response = await _handle_entity_call(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        hass, entity, func, data, call.context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 904, in _handle_entity_call
+    result = await task
+             ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/components/tts/entity.py", line 136, in async_speak
+    await self.hass.services.async_call(
+    ...<17 lines>...
+    )
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2817, in async_call
+    response_data = await coro
+                    ^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 816, in entity_service_call
+    raise ServiceNotSupported(call.domain, call.service, entity.entity_id)
+homeassistant.exceptions.ServiceNotSupported: Entity media_player.kitchen does not support action media_player.play_media
+2026-02-20 20:35:44.230 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Attesa di 5.90s per fine messaggio.
+2026-02-20 20:35:50.132 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Coda vuota, chiusura sessione e ripristino media.
+2026-02-20 20:35:50.132 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Resume del volume di media_player.kitchen con 1.0
+2026-02-20 20:35:50.132 ERROR (MainThread) [homeassistant.core] Error executing service: <ServiceCall media_player.play_media (c:01KHY8T8KMA1N3KP6NDP81FPS7): entity_id=['media_player.kitchen'], extra=, media_type=music, media_id=bounzz-1>
+Traceback (most recent call last):
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2837, in _run_service_call_catch_exceptions
+    await coro_or_task
+  File "/usr/src/homeassistant/homeassistant/core.py", line 2860, in _execute_service
+    return await target(service_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/src/homeassistant/homeassistant/helpers/service.py", line 816, in entity_service_call
+    raise ServiceNotSupported(call.domain, call.service, entity.entity_id)
+homeassistant.exceptions.ServiceNotSupported: Entity media_player.kitchen does not support action media_player.play_media
+2026-02-20 20:35:50.134 DEBUG (MainThread) [custom_components.universal_notifier] UniNotifier: Tentativo di resume eseguito per media_player.kitchen
