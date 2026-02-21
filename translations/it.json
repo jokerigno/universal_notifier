@@ -9,7 +9,8 @@
           "date_format":     "Formato orario (strftime, es. %H:%M)",
           "include_time":    "Includi l'orario nel prefisso del messaggio",
           "bold_prefix":     "Prefisso messaggio in grassetto",
-          "priority_volume": "Volume prioritario (0.0 - 1.0)",
+          "priority_volume":  "Volume prioritario (0.0 - 1.0)",
+          "person_entities": "Entità persona (opzionale, per rilevamento presenza)",
           "dnd_start":       "Inizio Non Disturbare (HH:MM)",
           "dnd_end":         "Fine Non Disturbare (HH:MM)"
         }
@@ -37,11 +38,24 @@
           "evening_greetings":   "Saluti della sera",
           "night_greetings":     "Saluti della notte"
         }
+      },
+      "add_first_channel": {
+        "title": "Primo canale (obbligatorio)",
+        "description": "Aggiungi almeno un canale di notifica per completare la configurazione.",
+        "data": {
+          "alias":        "Alias (nome univoco, es. notifica_ui)",
+          "service":      "Servizio (dominio.servizio, es. notify.persistent_notification)",
+          "target":       "entity_id target (opzionale, separati da virgola per più entità)",
+          "is_voice":     "Canale vocale (TTS)",
+          "alt_services": "Servizi alternativi (dizionario JSON opzionale)"
+        }
       }
     },
     "error": {
-      "invalid_time": "Formato orario non valido — usa HH:MM (es. 23:00).",
-      "invalid_json": "JSON non valido per i servizi alternativi."
+      "required":        "Questo campo è obbligatorio.",
+      "invalid_time":    "Formato orario non valido — usa HH:MM (es. 23:00).",
+      "invalid_json":    "JSON non valido per i servizi alternativi.",
+      "invalid_service": "Il servizio deve essere nel formato dominio.servizio (es. notify.mobile_app)."
     },
     "abort": {
       "already_configured": "Universal Notifier è già configurato.",
@@ -67,7 +81,8 @@
           "date_format":     "Formato orario (strftime, es. %H:%M)",
           "include_time":    "Includi l'orario nel prefisso del messaggio",
           "bold_prefix":     "Prefisso messaggio in grassetto",
-          "priority_volume": "Volume prioritario (0.0 – 1.0)"
+          "priority_volume":  "Volume prioritario (0.0 – 1.0)",
+          "person_entities": "Entità persona (opzionale, per rilevamento presenza)"
         }
       },
       "dnd": {

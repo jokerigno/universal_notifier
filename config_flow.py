@@ -8,6 +8,8 @@ from homeassistant.core import callback
 from homeassistant.util import dt as dt_util
 from homeassistant.helpers.selector import (
     BooleanSelector,
+    EntitySelector,
+    EntitySelectorConfig,
     NumberSelector,
     NumberSelectorConfig,
     NumberSelectorMode,
@@ -18,7 +20,7 @@ from homeassistant.helpers.selector import (
     TextSelectorConfig,
 )
 
-from .const import DOMAIN
+from .const import DOMAIN, CONF_PERSON_ENTITIES
 
 # ---------------------------------------------------------------------------
 # Slot keys (ordine fisso)
@@ -50,12 +52,13 @@ DEFAULT_GREETINGS = {
 # ---------------------------------------------------------------------------
 # Selector helpers
 # ---------------------------------------------------------------------------
-_SLIDER_0_1 = NumberSelector(
+_SLIDER_0_1    = NumberSelector(
     NumberSelectorConfig(min=0.0, max=1.0, step=0.05, mode=NumberSelectorMode.SLIDER)
 )
-_TEXT       = TextSelector()
-_BOOL       = BooleanSelector()
-_MULTILINE  = TextSelector(TextSelectorConfig(multiline=True))
+_TEXT          = TextSelector()
+_BOOL          = BooleanSelector()
+_MULTILINE     = TextSelector(TextSelectorConfig(multiline=True))
+_PERSON_MULTI  = EntitySelector(EntitySelectorConfig(domain="person", multiple=True))
 
 
 def _is_valid_time(value: str) -> bool:
@@ -128,7 +131,7 @@ def _greetings_schema(defaults: dict) -> vol.Schema:
 
 
 # ===========================================================================
-# CONFIG FLOW (wizard iniziale — 3 step)
+# CONFIG FLOW (setup iniziale, guidato, step-by-step)
 # ===========================================================================
 
 class UniversalNotifierConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -158,6 +161,7 @@ class UniversalNotifierConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     "include_time":    user_input["include_time"],
                     "bold_prefix":     user_input["bold_prefix"],
                     "priority_volume": float(user_input["priority_volume"]),
+                    "person_entities": user_input.get("person_entities", []),
                     "dnd": {"start": dnd_start, "end": dnd_end},
                 })
                 return await self.async_step_time_slots()
@@ -168,6 +172,7 @@ class UniversalNotifierConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             vol.Optional("include_time",    default=DEFAULT_INCLUDE_TIME):    _BOOL,
             vol.Optional("bold_prefix",     default=DEFAULT_BOLD_PREFIX):     _BOOL,
             vol.Optional("priority_volume", default=DEFAULT_PRIORITY_VOLUME): _SLIDER_0_1,
+            vol.Optional("person_entities", default=[]):                      _PERSON_MULTI,
             vol.Optional("dnd_start", default=DEFAULT_DND["start"]): _TEXT,
             vol.Optional("dnd_end",   default=DEFAULT_DND["end"]):   _TEXT,
         })
@@ -195,22 +200,62 @@ class UniversalNotifierConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             errors=errors,
         )
 
-    # ── Step 3: Greetings → create entry ──────────────────────────────────
+    # ── Step 3: Greetings ─────────────────────────────────────────────────
 
     async def async_step_greetings(self, user_input=None):
         if user_input is not None:
             self._data["greetings"] = _text_to_greetings(user_input)
-            self._data["channels"]  = {}   # canali aggiunti dopo via OptionsFlow
-
-            await self.async_set_unique_id(DOMAIN)
-            self._abort_if_unique_id_configured()
-
-            return self.async_create_entry(title="Universal Notifier", data=self._data)
+            return await self.async_step_add_first_channel()
 
         return self.async_show_form(
             step_id="greetings",
             data_schema=_greetings_schema(DEFAULT_GREETINGS),
         )
+
+    # ── Step 4: First channel (required) → create entry ───────────────────
+
+    async def async_step_add_first_channel(self, user_input=None):
+        errors = {}
+
+        if user_input is not None:
+            alias   = (user_input.get("alias") or "").strip()
+            service = (user_input.get("service") or "").strip()
+
+            if not alias:
+                errors["alias"] = "required"
+            elif not service or "." not in service:
+                errors["service"] = "invalid_service"
+            else:
+                alt_raw = (user_input.get("alt_services") or "{}").strip()
+                try:
+                    alt_services = json.loads(alt_raw) if alt_raw else {}
+                    if not isinstance(alt_services, dict):
+                        raise ValueError
+                except (json.JSONDecodeError, ValueError):
+                    errors["alt_services"] = "invalid_json"
+                    alt_services = None
+
+                if alt_services is not None:
+                    self._data["channels"] = {
+                        alias: {
+                            "service":      service,
+                            "target":       (user_input.get("target") or "").strip(),
+                            "is_voice":     user_input.get("is_voice", False),
+                            "alt_services": alt_services,
+                        }
+                    }
+                    await self.async_set_unique_id(DOMAIN)
+                    self._abort_if_unique_id_configured()
+                    return self.async_create_entry(title="Universal Notifier", data=self._data)
+
+        schema = vol.Schema({
+            vol.Required("alias"):                       _TEXT,
+            vol.Required("service"):                     _TEXT,
+            vol.Optional("target",       default=""):    _TEXT,
+            vol.Optional("is_voice",     default=False): _BOOL,
+            vol.Optional("alt_services", default="{}"):  _MULTILINE,
+        })
+        return self.async_show_form(step_id="add_first_channel", data_schema=schema, errors=errors)
 
     # ── Attach OptionsFlow ─────────────────────────────────────────────────
 
@@ -256,6 +301,7 @@ class UniversalNotifierOptionsFlow(config_entries.OptionsFlow):
                 "include_time":    user_input["include_time"],
                 "bold_prefix":     user_input["bold_prefix"],
                 "priority_volume": float(user_input["priority_volume"]),
+                "person_entities": user_input.get("person_entities", []),
             })
             return self._save()
 
@@ -266,6 +312,7 @@ class UniversalNotifierOptionsFlow(config_entries.OptionsFlow):
             vol.Optional("include_time",    default=eff.get("include_time",    DEFAULT_INCLUDE_TIME)):    _BOOL,
             vol.Optional("bold_prefix",     default=eff.get("bold_prefix",     DEFAULT_BOLD_PREFIX)):     _BOOL,
             vol.Optional("priority_volume", default=eff.get("priority_volume", DEFAULT_PRIORITY_VOLUME)): _SLIDER_0_1,
+            vol.Optional("person_entities", default=eff.get("person_entities", [])): _PERSON_MULTI,
         })
         return self.async_show_form(step_id="global_settings", data_schema=schema)
 

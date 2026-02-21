@@ -23,32 +23,5 @@ logger:
 # Necessarie per testare la logica vocale (snapshot/volume/restore)
 demo:
 
-# =============================================================
-# UNIVERSAL NOTIFIER
-# CONFIG_SCHEMA richiede SOLO `channels` (tutto il resto ha default)
-# =============================================================
-universal_notifier:
-  assistant_name: "Jarvis"       # Name displayed in text messages
-  date_format: "%H:%M"           # Time format
-  include_time: true
-
-  dnd:
-    start: "00:00"
-    end: "06:30"
-    
-  greetings:
-    morning:
-      - "Good morning sir"
-      - "Welcome back"
-    night:
-      - "Good night"
-      - "Shh, it's late"
-
-  channels:
-    notifica_ui:
-      service: notify.persistent_notification
-      is_voice: false
-    google_home:
-      service: tts.speak
-      target: tts.google_translate_en_com
-      is_voice: true
+# Universal Notifier è ora configurato via UI:
+# Impostazioni → Integrazioni → Aggiungi integrazione → Universal Notifier

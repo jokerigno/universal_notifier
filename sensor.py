@@ -1,12 +1,17 @@
 # /config/custom_components/universal_notifier/sensor.py
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.util import dt as dt_util
-from .const import DOMAIN, CONF_TIME_SLOTS
+from homeassistant.helpers.event import async_track_state_change_event
+from homeassistant.core import callback
+from .const import DOMAIN, CONF_TIME_SLOTS, CONF_PERSON_ENTITIES
 from .utils import get_current_slot_info
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    conf = hass.data[DOMAIN]["conf"]
-    async_add_entities([UNotifierVolumeSensor(conf)], True)
+async def async_setup_entry(hass, entry, async_add_entities) -> None:
+    conf = hass.data[DOMAIN][entry.entry_id]["conf"]
+    async_add_entities([
+        UNotifierVolumeSensor(conf),
+        UNotifierFamilySensor(hass, conf),
+    ], True)
 
 class UNotifierVolumeSensor(SensorEntity):
     def __init__(self, conf):
@@ -42,3 +47,33 @@ class UNotifierVolumeSensor(SensorEntity):
             "current_slot": slot_name,
             "raw_volume": vol
         }
+
+
+class UNotifierFamilySensor(SensorEntity):
+    _attr_name = "Universal Notifier Family"
+    _attr_unique_id = f"{DOMAIN}_family"
+    _attr_icon = "mdi:home-account"
+
+    def __init__(self, hass, conf):
+        self.hass = hass
+        self._person_entities = conf.get(CONF_PERSON_ENTITIES, [])
+
+    @property
+    def native_value(self) -> str:
+        for entity_id in self._person_entities:
+            state = self.hass.states.get(entity_id)
+            if state and state.state == "home":
+                return "home"
+        return "not_home"
+
+    async def async_added_to_hass(self):
+        if self._person_entities:
+            self.async_on_remove(
+                async_track_state_change_event(
+                    self.hass, self._person_entities, self._handle_change
+                )
+            )
+
+    @callback
+    def _handle_change(self, event):
+        self.async_write_ha_state()

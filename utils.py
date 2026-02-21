@@ -6,13 +6,13 @@ from homeassistant.util import dt as dt_util
 # HELPER FUNCTIONS
 # ==============================================================================
 
-def estimate_tts_duration(text: str) -> float:
+def estimate_tts_duration(text: str, buffer: float = 1.5) -> float:
     """Stima la durata del messaggio in secondi basandosi sulle parole."""
     if not text: return 0
     # Media: 2.5 parole al secondo circa (o 150 parole/minuto)
     words = len(text.split())
-    estimated_seconds = (words / 2.5) + 1.5 # +1.5s di buffer/latenza avvio
-    return max(3.5, estimated_seconds) # Minimo 3.5 secondi
+    estimated_seconds = (words / 2.5) + buffer
+    return max(buffer + 2.0, estimated_seconds)
 
 def is_time_in_range(start_str: str, end_str: str, now_time) -> bool:
     """Controlla se l'orario attuale è in un range (gestisce accavallamento notte)."""

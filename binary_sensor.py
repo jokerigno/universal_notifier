@@ -4,8 +4,8 @@ from homeassistant.util import dt as dt_util
 from .const import DOMAIN, CONF_DND
 from .utils import is_time_in_range
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    conf = hass.data[DOMAIN]["conf"]
+async def async_setup_entry(hass, entry, async_add_entities) -> None:
+    conf = hass.data[DOMAIN][entry.entry_id]["conf"]
     async_add_entities([UNotifierDNDSensor(conf)], True)
 
 class UNotifierDNDSensor(BinarySensorEntity):
