@@ -1,0 +1,137 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Universal Notifier — Configurazione",
+        "description": "Configura le impostazioni globali delle notifiche e gli orari di Non Disturbare.",
+        "data": {
+          "assistant_name":  "Nome dell'assistente",
+          "date_format":     "Formato orario (strftime, es. %H:%M)",
+          "include_time":    "Includi l'orario nel prefisso del messaggio",
+          "bold_prefix":     "Prefisso messaggio in grassetto",
+          "priority_volume": "Volume prioritario (0.0 - 1.0)",
+          "dnd_start":       "Inizio Non Disturbare (HH:MM)",
+          "dnd_end":         "Fine Non Disturbare (HH:MM)"
+        }
+      },
+      "time_slots": {
+        "title": "Fasce orarie",
+        "description": "Imposta l'orario di inizio e il volume TTS per ciascuna fascia oraria.",
+        "data": {
+          "morning_start":    "Inizio mattina",
+          "morning_volume":   "Volume mattina",
+          "afternoon_start":  "Inizio pomeriggio",
+          "afternoon_volume": "Volume pomeriggio",
+          "evening_start":    "Inizio sera",
+          "evening_volume":   "Volume sera",
+          "night_start":      "Inizio notte",
+          "night_volume":     "Volume notte"
+        }
+      },
+      "greetings": {
+        "title": "Saluti",
+        "description": "Inserisci un saluto per riga per ciascuna fascia oraria. Ne verrà scelto uno casuale.",
+        "data": {
+          "morning_greetings":   "Saluti del mattino",
+          "afternoon_greetings": "Saluti del pomeriggio",
+          "evening_greetings":   "Saluti della sera",
+          "night_greetings":     "Saluti della notte"
+        }
+      }
+    },
+    "error": {
+      "invalid_time": "Formato orario non valido — usa HH:MM (es. 23:00).",
+      "invalid_json": "JSON non valido per i servizi alternativi."
+    },
+    "abort": {
+      "already_configured": "Universal Notifier è già configurato.",
+      "single_instance_allowed": "È consentita una sola istanza di Universal Notifier."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Universal Notifier — Opzioni",
+        "menu_options": {
+          "global_settings": "Impostazioni globali",
+          "dnd":             "Non Disturbare",
+          "time_slots":      "Fasce orarie",
+          "greetings":       "Saluti",
+          "channels_menu":   "Canali"
+        }
+      },
+      "global_settings": {
+        "title": "Impostazioni globali",
+        "data": {
+          "assistant_name":  "Nome dell'assistente",
+          "date_format":     "Formato orario (strftime, es. %H:%M)",
+          "include_time":    "Includi l'orario nel prefisso del messaggio",
+          "bold_prefix":     "Prefisso messaggio in grassetto",
+          "priority_volume": "Volume prioritario (0.0 – 1.0)"
+        }
+      },
+      "dnd": {
+        "title": "Non Disturbare",
+        "description": "Le notifiche vocali vengono soppresse in questa finestra oraria (salvo priority=true).",
+        "data": {
+          "dnd_start": "Inizio Non Disturbare (HH:MM)",
+          "dnd_end":   "Fine Non Disturbare (HH:MM)"
+        }
+      },
+      "time_slots": {
+        "title": "Fasce orarie",
+        "description": "Imposta l'orario di inizio e il volume TTS per ciascuna fascia oraria.",
+        "data": {
+          "morning_start":    "Inizio mattina",
+          "morning_volume":   "Volume mattina",
+          "afternoon_start":  "Inizio pomeriggio",
+          "afternoon_volume": "Volume pomeriggio",
+          "evening_start":    "Inizio sera",
+          "evening_volume":   "Volume sera",
+          "night_start":      "Inizio notte",
+          "night_volume":     "Volume notte"
+        }
+      },
+      "greetings": {
+        "title": "Saluti",
+        "description": "Inserisci un saluto per riga per ciascuna fascia oraria.",
+        "data": {
+          "morning_greetings":   "Saluti del mattino",
+          "afternoon_greetings": "Saluti del pomeriggio",
+          "evening_greetings":   "Saluti della sera",
+          "night_greetings":     "Saluti della notte"
+        }
+      },
+      "channels_menu": {
+        "title": "Canali",
+        "menu_options": {
+          "add_channel":    "Aggiungi canale",
+          "remove_channel": "Rimuovi canale"
+        }
+      },
+      "add_channel": {
+        "title": "Aggiungi canale",
+        "description": "Definisci un nuovo alias per il canale di notifica.",
+        "data": {
+          "alias":        "Alias (nome univoco, es. google_home)",
+          "service":      "Servizio (dominio.servizio, es. notify.persistent_notification)",
+          "target":       "entity_id target (opzionale, separati da virgola per più entità)",
+          "is_voice":     "Canale vocale (applica logica TTS, Non Disturbare e volume)",
+          "alt_services": "Servizi alternativi (dizionario JSON opzionale — per foto/video Telegram ecc.)"
+        }
+      },
+      "remove_channel": {
+        "title": "Rimuovi canale",
+        "data": {
+          "alias": "Canale da rimuovere"
+        }
+      }
+    },
+    "error": {
+      "required":        "Questo campo è obbligatorio.",
+      "invalid_time":    "Formato orario non valido — usa HH:MM.",
+      "invalid_json":    "Stringa JSON non valida per i servizi alternativi.",
+      "invalid_service": "Il servizio deve essere nel formato dominio.servizio (es. notify.mobile_app)."
+    }
+  }
+}

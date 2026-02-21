@@ -1,0 +1,137 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Universal Notifier — Setup",
+        "description": "Configure global notification settings and Do Not Disturb hours.",
+        "data": {
+          "assistant_name":  "Assistant Name",
+          "date_format":     "Time Format (strftime, e.g. %H:%M)",
+          "include_time":    "Include Time in Message Prefix",
+          "bold_prefix":     "Bold Message Prefix",
+          "priority_volume": "Priority Volume (0.0 – 1.0)",
+          "dnd_start":       "DND Start (HH:MM)",
+          "dnd_end":         "DND End (HH:MM)"
+        }
+      },
+      "time_slots": {
+        "title": "Time Slots",
+        "description": "Set the start time and TTS volume for each time period.",
+        "data": {
+          "morning_start":    "Morning Start",
+          "morning_volume":   "Morning Volume",
+          "afternoon_start":  "Afternoon Start",
+          "afternoon_volume": "Afternoon Volume",
+          "evening_start":    "Evening Start",
+          "evening_volume":   "Evening Volume",
+          "night_start":      "Night Start",
+          "night_volume":     "Night Volume"
+        }
+      },
+      "greetings": {
+        "title": "Greetings",
+        "description": "Enter one greeting per line for each time slot. A random one will be chosen.",
+        "data": {
+          "morning_greetings":   "Morning Greetings",
+          "afternoon_greetings": "Afternoon Greetings",
+          "evening_greetings":   "Evening Greetings",
+          "night_greetings":     "Night Greetings"
+        }
+      }
+    },
+    "error": {
+      "invalid_time": "Invalid time format — use HH:MM (e.g. 23:00).",
+      "invalid_json": "Invalid JSON for Alt Services."
+    },
+    "abort": {
+      "already_configured": "Universal Notifier is already configured.",
+      "single_instance_allowed": "Only one instance of Universal Notifier is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Universal Notifier — Options",
+        "menu_options": {
+          "global_settings": "Global Settings",
+          "dnd":             "Do Not Disturb",
+          "time_slots":      "Time Slots",
+          "greetings":       "Greetings",
+          "channels_menu":   "Channels"
+        }
+      },
+      "global_settings": {
+        "title": "Global Settings",
+        "data": {
+          "assistant_name":  "Assistant Name",
+          "date_format":     "Time Format (strftime, e.g. %H:%M)",
+          "include_time":    "Include Time in Message Prefix",
+          "bold_prefix":     "Bold Message Prefix",
+          "priority_volume": "Priority Volume (0.0 – 1.0)"
+        }
+      },
+      "dnd": {
+        "title": "Do Not Disturb",
+        "description": "Voice notifications are suppressed during this window (unless priority=true).",
+        "data": {
+          "dnd_start": "DND Start (HH:MM)",
+          "dnd_end":   "DND End (HH:MM)"
+        }
+      },
+      "time_slots": {
+        "title": "Time Slots",
+        "description": "Set the start time and TTS volume for each time period.",
+        "data": {
+          "morning_start":    "Morning Start",
+          "morning_volume":   "Morning Volume",
+          "afternoon_start":  "Afternoon Start",
+          "afternoon_volume": "Afternoon Volume",
+          "evening_start":    "Evening Start",
+          "evening_volume":   "Evening Volume",
+          "night_start":      "Night Start",
+          "night_volume":     "Night Volume"
+        }
+      },
+      "greetings": {
+        "title": "Greetings",
+        "description": "Enter one greeting per line for each time slot.",
+        "data": {
+          "morning_greetings":   "Morning Greetings",
+          "afternoon_greetings": "Afternoon Greetings",
+          "evening_greetings":   "Evening Greetings",
+          "night_greetings":     "Night Greetings"
+        }
+      },
+      "channels_menu": {
+        "title": "Channels",
+        "menu_options": {
+          "add_channel":    "Add Channel",
+          "remove_channel": "Remove Channel"
+        }
+      },
+      "add_channel": {
+        "title": "Add Channel",
+        "description": "Define a new notification channel alias.",
+        "data": {
+          "alias":        "Alias (unique name, e.g. google_home)",
+          "service":      "Service (domain.service, e.g. notify.persistent_notification)",
+          "target":       "Target entity_id (optional, comma-separated for multiple)",
+          "is_voice":     "Voice Channel (applies TTS, DND and volume logic)",
+          "alt_services": "Alt Services (JSON dict, optional — for Telegram photo/video etc.)"
+        }
+      },
+      "remove_channel": {
+        "title": "Remove Channel",
+        "data": {
+          "alias": "Channel to Remove"
+        }
+      }
+    },
+    "error": {
+      "required":        "This field is required.",
+      "invalid_time":    "Invalid time format — use HH:MM.",
+      "invalid_json":    "Invalid JSON string for Alt Services.",
+      "invalid_service": "Service must be in domain.service format (e.g. notify.mobile_app)."
+    }
+  }
+}
