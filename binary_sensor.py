@@ -23,5 +23,5 @@ class UNotifierDNDSensor(BinarySensorEntity):
 
     @property
     def icon(self):
-        """Icona dinamica: campana barrata se DND è attivo (silenzioso)."""
+        """Icona dinamica: bell-off se DND è attivo (silenzioso)."""
         return "mdi:bell-off" if self.is_on else "mdi:bell-on"

@@ -9,7 +9,7 @@
           "date_format":     "Formato orario (strftime, es. %H:%M)",
           "include_time":    "Includi l'orario nel prefisso del messaggio",
           "bold_prefix":     "Prefisso messaggio in grassetto",
-          "priority_volume":  "Volume prioritario (0.0 - 1.0)",
+          "priority_volume": "Volume prioritario (0.0 - 1.0)",
           "person_entities": "Entità persona (opzionale, per rilevamento presenza)",
           "dnd_start":       "Inizio Non Disturbare (HH:MM)",
           "dnd_end":         "Fine Non Disturbare (HH:MM)"
@@ -81,7 +81,7 @@
           "date_format":     "Formato orario (strftime, es. %H:%M)",
           "include_time":    "Includi l'orario nel prefisso del messaggio",
           "bold_prefix":     "Prefisso messaggio in grassetto",
-          "priority_volume":  "Volume prioritario (0.0 – 1.0)",
+          "priority_volume":  "Volume prioritario (0.0 - 1.0)",
           "person_entities": "Entità persona (opzionale, per rilevamento presenza)"
         }
       },

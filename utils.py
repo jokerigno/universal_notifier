@@ -15,7 +15,7 @@ def estimate_tts_duration(text: str, buffer: float = 1.5) -> float:
     return max(buffer + 2.0, estimated_seconds)
 
 def is_time_in_range(start_str: str, end_str: str, now_time) -> bool:
-    """Controlla se l'orario attuale è in un range (gestisce accavallamento notte)."""
+    """Controlla se l'orario attuale è in un range (gestisce accavallamento della notte)."""
     start = dt_util.parse_time(start_str)
     end = dt_util.parse_time(end_str)
     if start <= end:
@@ -43,7 +43,6 @@ def get_current_slot_info(slots_conf: dict, now_time) -> tuple:
         return "default", 0.2
     # Logica: Inizializziamo con l'ultimo slot della lista.
     # Questo copre il caso "notte" (es. dalle 23:00 alle 07:00).
-    # Se sono le 02:00, il loop sotto non scatterà mai, e rimarrà valido l'ultimo slot (night).
     current_slot = sorted_slots[-1][0]
     current_vol = sorted_slots[-1][2]
     for name, start_time, vol_val in sorted_slots:

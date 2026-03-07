@@ -34,6 +34,31 @@ _LOGGER = logging.getLogger(__name__)
 # Dizionario globale per tracciare gli stati originali fuori dal worker
 _ORIGINAL_STATES = {}
 
+
+# ==============================================================================
+# LOGICA DI RICARICA E SCARICO
+# ==============================================================================
+async def _async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Ricarica l'entry quando le opzioni vengono aggiornate dall'utente."""
+    await hass.config_entries.async_reload(entry.entry_id)
+
+
+async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Scarica l'entry e libera le risorse."""
+    # Pulizia stati snapshot eventualmente orfani
+    _ORIGINAL_STATES.clear()
+
+    # Rimuovi il servizio
+    hass.services.async_remove(DOMAIN, "send")
+
+    # Scarica le piattaforme
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
+
+    if unload_ok:
+        hass.data[DOMAIN].pop(entry.entry_id, None)
+
+    return unload_ok
+
 # ==============================================================================
 # LOGICA DI RESUME
 # ==============================================================================
@@ -472,25 +497,3 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     entry.async_on_unload(entry.add_update_listener(_async_update_listener))
 
     return True
-
-
-async def _async_update_listener(hass: HomeAssistant, entry: ConfigEntry) -> None:
-    """Ricarica l'entry quando le opzioni vengono aggiornate dall'utente."""
-    await hass.config_entries.async_reload(entry.entry_id)
-
-
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Scarica l'entry e libera le risorse."""
-    # Pulizia stati snapshot eventualmente orfani
-    _ORIGINAL_STATES.clear()
-
-    # Rimuovi il servizio
-    hass.services.async_remove(DOMAIN, "send")
-
-    # Scarica le piattaforme
-    unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-
-    if unload_ok:
-        hass.data[DOMAIN].pop(entry.entry_id, None)
-
-    return unload_ok
