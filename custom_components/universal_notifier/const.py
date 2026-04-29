@@ -14,6 +14,7 @@ CONF_PERSON_ENTITIES = "person_entities"
 
 # --- Chiavi Parametri Servizio (Service Call) ---
 CONF_MESSAGE = "message"
+CONF_MESSAGE_TTS = "message_tts"
 CONF_TITLE = "title"
 CONF_TARGETS = "targets"
 CONF_DATA = "data"

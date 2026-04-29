@@ -20,7 +20,7 @@ from .const import (
     CONF_CHANNELS, CONF_ASSISTANT_NAME, CONF_DATE_FORMAT,
     CONF_GREETINGS, CONF_TIME_SLOTS, CONF_DND, CONF_BOLD_PREFIX,
     # Service keys (Inputs)
-    CONF_MESSAGE, CONF_TITLE, CONF_TARGETS, CONF_DATA, CONF_TARGET_DATA,
+    CONF_MESSAGE, CONF_MESSAGE_TTS, CONF_TITLE, CONF_TARGETS, CONF_DATA, CONF_TARGET_DATA,
     CONF_PRIORITY, CONF_SKIP_GREETING, CONF_INCLUDE_TIME, CONF_PRIORITY_VOLUME, CONF_OVERRIDE_GREETINGS,
     CONF_PERSON_ENTITIES,
     # Inner Channel keys
@@ -123,6 +123,7 @@ async def _apply_resume(hass: HomeAssistant, entity_id: str, target_volume: floa
 SEND_SERVICE_SCHEMA = vol.Schema({
     vol.Required(CONF_MESSAGE): cv.string,
     vol.Required(CONF_TARGETS): vol.All(cv.ensure_list, [cv.string]),
+    vol.Optional(CONF_MESSAGE_TTS): cv.string,
     vol.Optional(CONF_TITLE): cv.string,
     vol.Optional(CONF_DATA): dict,
     vol.Optional(CONF_TARGET_DATA): dict,
@@ -223,6 +224,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         """Handler principale del servizio 'send'."""
         # 1. Parsing Input
         global_raw_message = call.data.get(CONF_MESSAGE, "")
+        global_raw_tts_message = call.data.get(CONF_MESSAGE_TTS)  # None se non fornito
         global_title = call.data.get(CONF_TITLE)
         runtime_data = call.data.get(CONF_DATA, {})
         target_specific_data = call.data.get(CONF_TARGET_DATA, {})
@@ -280,6 +282,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 specific_data = target_specific_data[target_alias].copy()
             _LOGGER.debug(f"UniNotifier: Specific Data {specific_data}")
             target_raw_message = specific_data.pop(CONF_MESSAGE, global_raw_message)
+            target_raw_tts_message = specific_data.pop(CONF_MESSAGE_TTS, global_raw_tts_message)
 
             dynamic_entities = specific_data.pop(CONF_ENTITY_ID, channel_conf.get(CONF_TARGET))
             if isinstance(dynamic_entities, str):
@@ -328,7 +331,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 final_msg = target_raw_message
             else:
                 if is_voice_channel:
-                    clean_msg = clean_text_for_tts(str(target_raw_message))
+                    tts_source = target_raw_tts_message if target_raw_tts_message is not None else target_raw_message
+                    clean_msg = clean_text_for_tts(str(tts_source))
                     clean_greet = clean_text_for_tts(current_greeting)
                     full_spoken_text = ""
                     if final_title:
