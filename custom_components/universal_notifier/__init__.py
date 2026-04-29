@@ -447,6 +447,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 else:
                     service_payload.update(all_additional_data)
 
+            # Passa parse_mode ai canali notify non-voce così Telegram usa
+            # lo stesso formato (HTML/MarkdownV2) con cui è stato costruito il testo.
+            if not is_voice_channel and not is_command_message and srv_domain == "notify" and parse_mode:
+                if "data" not in service_payload:
+                    service_payload["data"] = {}
+                service_payload["data"].setdefault("parse_mode", parse_mode)
+
             ####################################################################
             physical_players = []
             # J. DISPATCH LOGIC: CODA PER VOCE vs IMMEDIATO
